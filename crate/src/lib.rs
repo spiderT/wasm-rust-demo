@@ -1,4 +1,4 @@
-use base64::{decode, encode};
+use base64::decode;
 use image::DynamicImage::ImageRgba8;
 use image::GenericImageView;
 use serde::{Deserialize, Serialize};
@@ -10,7 +10,7 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::Clamped;
 
 #[cfg(feature = "web-sys")]
-use web_sys::{Blob, CanvasRenderingContext2d, HtmlCanvasElement, HtmlImageElement, ImageData};
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, ImageData};
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -31,62 +31,6 @@ impl PrettierImage {
         }
     }
 
-    pub fn new_from_base64(base64: &str) -> PrettierImage {
-        base64_to_image(base64)
-    }
-
-    pub fn new_from_byteslice(vec: Vec<u8>) -> PrettierImage {
-        let slice = vec.as_slice();
-
-        let img = image::load_from_memory(slice).unwrap();
-
-        let raw_pixels = img.to_rgba8().to_vec();
-
-        PrettierImage {
-            raw_pixels,
-            width: img.width(),
-            height: img.height(),
-        }
-    }
-
-    #[cfg(feature = "web-sys")]
-    pub fn new_from_blob(blob: Blob) -> PrettierImage {
-        let bytes: js_sys::Uint8Array = js_sys::Uint8Array::new(&blob);
-
-        let vec = bytes.to_vec();
-
-        PrettierImage::new_from_byteslice(vec)
-    }
-
-    #[cfg(feature = "web-sys")]
-    pub fn new_from_image(image: HtmlImageElement) -> PrettierImage {
-        set_panic_hook();
-
-        let document = web_sys::window().unwrap().document().unwrap();
-
-        let canvas = document
-            .create_element("canvas")
-            .unwrap()
-            .dyn_into::<web_sys::HtmlCanvasElement>()
-            .unwrap();
-
-        canvas.set_width(image.width());
-        canvas.set_height(image.height());
-
-        let context = canvas
-            .get_context("2d")
-            .unwrap()
-            .unwrap()
-            .dyn_into::<CanvasRenderingContext2d>()
-            .unwrap();
-
-        context
-            .draw_image_with_html_image_element(&image, 0.0, 0.0)
-            .unwrap();
-
-        open_image(canvas, context)
-    }
-
     pub fn get_width(&self) -> u32 {
         self.width
     }
@@ -97,59 +41,6 @@ impl PrettierImage {
 
     pub fn get_height(&self) -> u32 {
         self.height
-    }
-
-    pub fn get_base64(&self) -> String {
-        let mut img = helpers::dyn_image_from_raw(self);
-        img = ImageRgba8(img.to_rgba8());
-
-        let mut buffer = vec![];
-        img.write_to(&mut buffer, image::ImageOutputFormat::Png)
-            .unwrap();
-        let base64 = encode(&buffer);
-
-        let res_base64 = format!("data:image/png;base64,{}", base64.replace("\r\n", ""));
-
-        res_base64
-    }
-
-    pub fn get_bytes(&self) -> Vec<u8> {
-        let mut img = helpers::dyn_image_from_raw(self);
-        img = ImageRgba8(img.to_rgba8());
-        let mut buffer = vec![];
-        img.write_to(&mut buffer, image::ImageOutputFormat::Png)
-            .unwrap();
-        buffer
-    }
-
-    pub fn get_bytes_jpeg(&self, quality: u8) -> Vec<u8> {
-        let mut img = helpers::dyn_image_from_raw(self);
-        img = ImageRgba8(img.to_rgba8());
-        let mut buffer = vec![];
-        let out_format = image::ImageOutputFormat::Jpeg(quality);
-        img.write_to(&mut buffer, out_format).unwrap();
-        buffer
-    }
-
-    #[cfg(all(feature = "web-sys", feature = "wasm-bindgen"))]
-    #[allow(clippy::unnecessary_mut_passed)]
-    pub fn get_image_data(&mut self) -> ImageData {
-        ImageData::new_with_u8_clamped_array_and_sh(
-            Clamped(&mut self.raw_pixels),
-            self.width,
-            self.height,
-        )
-        .unwrap()
-    }
-
-    #[cfg(feature = "web-sys")]
-    pub fn set_imgdata(&mut self, img_data: ImageData) {
-        let width = img_data.width();
-        let height = img_data.height();
-        let raw_pixels = to_raw_pixels(img_data);
-        self.width = width;
-        self.height = height;
-        self.raw_pixels = raw_pixels;
     }
 }
 
@@ -371,24 +262,14 @@ pub fn base64_to_vec(base64: &str) -> Vec<u8> {
     decode(base64).unwrap()
 }
 
-#[cfg(all(feature = "web-sys", feature = "wasm-bindgen"))]
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-#[allow(clippy::unnecessary_mut_passed)]
-pub fn to_image_data(prettier_image: PrettierImage) -> ImageData {
-    let mut raw_pixels = prettier_image.raw_pixels;
-    let width = prettier_image.width;
-    let height = prettier_image.height;
-    ImageData::new_with_u8_clamped_array_and_sh(Clamped(&mut raw_pixels), width, height).unwrap()
-}
-
 fn set_panic_hook() {
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
 }
 
 pub mod channels;
-pub mod helpers;
-mod iter;
-pub mod filters;
 pub mod colour_spaces;
 pub mod effects;
+pub mod filters;
+pub mod helpers;
+mod iter;

@@ -12,6 +12,10 @@
       width: 100%;
     }
 
+    h4 {
+      margin: 10px 0;
+    }
+
     #image_container img {
       display: none;
     }
@@ -33,7 +37,6 @@
       top: 0;
       left: 0;
       overflow-x: hidden;
-      padding-top: 20px;
     }
 
     .sidebar li {
@@ -168,7 +171,7 @@
           <li class="effect" id="inc_red_channel">Inc Red Channel</li>
           <li class="effect" id="inc_blue_channel">Inc Blue Channel</li>
           <li class="effect" id="inc_green_channel">Inc Green Channel</li>
-          <li class="effect" id="inc_two_channels">Inc 2 Channels</li>
+          <!-- <li class="effect" id="inc_two_channels">Inc 2 Channels</li> -->
           <li class="effect" id="swap_rg_channels">Swap R+G Channels</li>
           <li class="effect" id="swap_gb_channels">Swap B+G Channels</li>
           <li class="effect" id="swap_rb_channels">Swap R+B Channels</li>
@@ -204,11 +207,8 @@
             <div id="image_container"></div>
             <canvas id="canvas"></canvas>
           </section>
-
           <section class="benchmarks">
             <div id="time"></div>
-            <div id="code"></div>
-            <section id="resized_imgs"></section>
           </section>
         </div>
       </div>

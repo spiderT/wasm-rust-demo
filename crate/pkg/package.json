@@ -1,0 +1,26 @@
+{
+  "name": "wasm-rust-demo-rs",
+  "collaborators": [
+    ""
+  ],
+  "description": "",
+  "version": "0.0.1",
+  "license": "MIT/Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "files": [
+    "wasm_rust_demo_rs_bg.wasm",
+    "wasm_rust_demo_rs.js",
+    "wasm_rust_demo_rs_bg.js",
+    "wasm_rust_demo_rs.d.ts"
+  ],
+  "module": "wasm_rust_demo_rs.js",
+  "homepage": "",
+  "types": "wasm_rust_demo_rs.d.ts",
+  "sideEffects": [
+    "./wasm_rust_demo_rs.js",
+    "./snippets/*"
+  ]
+}

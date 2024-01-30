@@ -162,7 +162,7 @@ import("../crate/pkg").then((module) => {
     console.log("update benchmarks");
     let time_taken = endTime - startTime;
     let time_elem = document.getElementById("time");
-    time_elem.innerHTML = `Time: ${time_taken.toFixed(2)}ms`;
+    time_elem.innerHTML = `耗时: ${time_taken.toFixed(2)}ms`;
   }
 
   function readURL() {
