@@ -1,0 +1,85 @@
+[package]
+authors = [""]
+categories = ["wasm", "multimedia"]
+description = ""
+license = "MIT/Apache-2.0"
+name = "wasm-rust-demo-rs"
+readme = "./README.md"
+repository = ""
+version = "0.0.1"
+edition = "2021"
+exclude = []
+homepage = ""
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+image = { version = "0.23.12", default-features = false, features = [
+  "gif",
+  "jpeg",
+  "ico",
+  "png",
+  "pnm",
+  "tga",
+  "tiff",
+  "webp",
+  "bmp",
+  "hdr",
+  "dxt",
+  "dds",
+  "farbfeld",
+] }
+palette = "0.6.1"
+rand = "0.7.2"
+imageproc = { version = "0.22.0", default-features = false }
+rusttype = "0.9.2"
+base64 = "0.13.0"
+time = "0.3.21"
+wasm-bindgen = { version = "=0.2.85", optional = true }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "1.0"
+js-sys = { version = "0.3.62", optional = true }
+node-sys = { version = "0.4.2", optional = true }
+perlin2d = "0.2.6"
+
+
+console_error_panic_hook = { version = "0.1.7", optional = true }
+
+wee_alloc = { version = "0.4.2", optional = true }
+
+[dev-dependencies]
+time = "0.3.21"
+criterion = "0.3"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O3", "--enable-mutable-globals"]
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "Document",
+  "Element",
+  "HtmlElement",
+  "Node",
+  "Window",
+  "CanvasRenderingContext2d",
+  "ImageData",
+  "HtmlCanvasElement",
+  "HtmlImageElement",
+  "console",
+  'CssStyleDeclaration',
+  'EventTarget',
+  "Blob",
+]
+optional = true
+
+[features]
+default = ["enable_wasm"]
+enable_wasm = [
+  "wasm-bindgen",
+  "web-sys",
+  "js-sys",
+  "node-sys",
+  "console_error_panic_hook",
+]

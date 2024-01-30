@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Prettier Image Demo</title>
+  </head>
+  <script src="./bootstrap.js"></script>
+  <style>
+    body,
+    .default,
+    canvas {
+      width: 100%;
+    }
+
+    #image_container img {
+      display: none;
+    }
+
+    .main {
+      margin-left: 40vh;
+      padding: 0px 10px;
+    }
+
+    .main_content {
+      padding-top: 14vh;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 40vh;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .sidebar li {
+      display: block;
+      cursor: pointer;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidebar {
+        padding-top: 15px;
+      }
+      .sidebar a {
+        font-size: 18px;
+      }
+    }
+
+    nav {
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    nav li {
+      float: left;
+      display: block;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    ul li {
+      text-decoration: none;
+      list-style: none;
+      padding-right: 4em;
+    }
+
+    ul li:active {
+      font-weight: bolder;
+      color: #000;
+    }
+
+    .tab_nav {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-left: 0;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1em;
+      margin-left: 1em;
+    }
+
+    .content {
+      grid-area: "main_left";
+      width: 80%;
+    }
+
+    .colour_scheme {
+      border: solid transparent 0.1em;
+      border-radius: 0.5em;
+      padding: 2em;
+      padding-right: 4em;
+      padding-left: 4em;
+    }
+
+    .benchmarks {
+      font-size: 2em;
+      grid-area: "main_right";
+    }
+
+    .main_content {
+      display: grid;
+      grid-template-columns: 75% 25%;
+      grid-template-rows: auto;
+      grid-template-areas: "main_left main_right";
+    }
+
+    #code {
+      font-size: 0.5em;
+    }
+
+    .topnav {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+    a {
+      color: rgb(105, 105, 105);
+      text-decoration: none;
+      margin-left: 1em;
+    }
+    li:hover {
+      color: rgb(143, 143, 143);
+    }
+  </style>
+
+  <body>
+    <div class="default">
+      <nav class="topnav">
+        <ul>
+          <li>
+            <a href="#change_img">
+              <input
+                class="file-input"
+                type="file"
+                id="img_uploader"
+                name="upload-image"
+              />
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar">
+        <ul>
+          <h4>Filters</h4>
+          <li class="filter" id="oceanic">Oceanic</li>
+          <li class="filter" id="islands">Islands</li>
+          <li class="filter" id="marine">Marine</li>
+          <li class="filter" id="seagreen">Seagreen</li>
+          <li class="filter" id="flagblue">Flagblue</li>
+          <li class="filter" id="liquid">Liquid</li>
+          <li class="filter" id="diamante">Diamante</li>
+          <li class="filter" id="vintage">Vintage</li>
+          <li class="filter" id="perfume">Perfume</li>
+          <li class="filter" id="serenity">Serenity</li>
+        </ul>
+        <ul>
+          <h4>Channels</h4>
+          <li class="effect" id="inc_red_channel">Inc Red Channel</li>
+          <li class="effect" id="inc_blue_channel">Inc Blue Channel</li>
+          <li class="effect" id="inc_green_channel">Inc Green Channel</li>
+          <li class="effect" id="inc_two_channels">Inc 2 Channels</li>
+          <li class="effect" id="swap_rg_channels">Swap R+G Channels</li>
+          <li class="effect" id="swap_gb_channels">Swap B+G Channels</li>
+          <li class="effect" id="swap_rb_channels">Swap R+B Channels</li>
+          <li class="effect" id="remove_red_channel">Remove Red Channel</li>
+          <li class="effect" id="remove_green_channel">Remove Green Channel</li>
+          <li class="effect" id="remove_blue_channel">Remove Blue Channel</li>
+          <li class="effect" id="dec_red_channel">Dec Red Channel</li>
+          <li class="effect" id="dec_blue_channel">Dec Blue Channel</li>
+          <li class="effect" id="dec_green_channel">Dec Green Channel</li>
+        </ul>
+        <ul>
+          <h4>Colour Spaces</h4>
+          <li class="effect" id="hue_rotate_hsl">Hue Rotate HSL</li>
+          <li class="effect" id="hue_rotate_hsv">Hue Rotate HSV</li>
+          <li class="effect" id="hue_rotate_lch">Hue Rotate LCh</li>
+          <li class="effect" id="lighten_hsl">Lighten HSL</li>
+          <li class="effect" id="lighten_hsv">Lighten HSV</li>
+          <li class="effect" id="lighten_lch">Lighten LCh</li>
+          <li class="effect" id="darken_hsl">Darken HSL</li>
+          <li class="effect" id="darken_hsv">Darken HSV</li>
+          <li class="effect" id="darken_lch">Darken LCh</li>
+          <li class="effect" id="saturate_hsl">Saturate HSL</li>
+          <li class="effect" id="saturate_hsv">Saturate HSV</li>
+          <li class="effect" id="saturate_lch">Saturate LCh</li>
+          <li class="effect" id="desaturate_hsl">Desaturate HSL</li>
+          <li class="effect" id="desaturate_hsv">Desaturate HSV</li>
+          <li class="effect" id="desaturate_lch">Desaturate LCh</li>
+        </ul>
+      </div>
+      <div class="main">
+        <div class="main_content">
+          <section class="content" id="images">
+            <div id="image_container"></div>
+            <canvas id="canvas"></canvas>
+          </section>
+
+          <section class="benchmarks">
+            <div id="time"></div>
+            <div id="code"></div>
+            <section id="resized_imgs"></section>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
