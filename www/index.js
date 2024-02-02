@@ -47,6 +47,9 @@ import("../crate/pkg").then((module) => {
     let rust_image = module.open_image(canvas, ctx);
 
     let filter_dict = {
+      invert: function () {
+        return module.invert(rust_image, 0, 90);
+      },
       inc_red_channel: function () {
         return module.alter_channel(rust_image, 0, 90);
       },

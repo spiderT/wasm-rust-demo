@@ -1,49 +1,11 @@
 use crate::channels::alter_channels;
 use crate::colour_spaces;
 use crate::colour_spaces::mix_with_colour;
-use crate::effects::{adjust_contrast, duotone, inc_brightness};
+use crate::effects::{adjust_contrast, inc_brightness};
 use crate::{PrettierImage, Rgb};
 
 #[cfg(feature = "enable_wasm")]
 use wasm_bindgen::prelude::*;
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn neue(prettier_image: &mut PrettierImage) {
-    let end = prettier_image.get_raw_pixels().len();
-
-    for i in (0..end).step_by(4) {
-        let b_val = prettier_image.raw_pixels[i + 2];
-        if 255_i32 - b_val as i32 > 0 {
-            prettier_image.raw_pixels[i + 2] = 255 - b_val;
-        }
-    }
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn lix(prettier_image: &mut PrettierImage) {
-    let end = prettier_image.get_raw_pixels().len();
-
-    for i in (0..end).step_by(4) {
-        let r_val = prettier_image.raw_pixels[i];
-        let g_val = prettier_image.raw_pixels[i + 1];
-
-        prettier_image.raw_pixels[i] = 255 - r_val;
-        prettier_image.raw_pixels[i + 1] = 255 - g_val;
-    }
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn ryo(prettier_image: &mut PrettierImage) {
-    let end = prettier_image.get_raw_pixels().len();
-
-    for i in (0..end).step_by(4) {
-        let r_val = prettier_image.raw_pixels[i];
-        let b_val = prettier_image.raw_pixels[i + 2];
-
-        prettier_image.raw_pixels[i] = 255 - r_val;
-        prettier_image.raw_pixels[i + 2] = 255 - b_val;
-    }
-}
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn filter(img: &mut PrettierImage, filter_name: &str) {
@@ -102,40 +64,6 @@ pub fn cali(img: &mut PrettierImage) {
     let cali_rgb = Rgb::new(255, 45, 75);
     colour_spaces::mix_with_colour(img, cali_rgb, 0.1);
     adjust_contrast(img, 50.0);
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn duotone_violette(img: &mut PrettierImage) {
-    let rgb_color = Rgb::new(16, 228, 248);
-    let rgb_color2 = Rgb::new(116, 54, 221);
-    duotone(img, rgb_color, rgb_color2);
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn duotone_horizon(img: &mut PrettierImage) {
-    let rgb_color = Rgb::new(169, 167, 132);
-    let rgb_color2 = Rgb::new(150, 24, 149);
-    duotone(img, rgb_color, rgb_color2);
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn duotone_tint(img: &mut PrettierImage, rgb_color: Rgb) {
-    let rgb_color2 = Rgb::new(68, 61, 76);
-    duotone(img, rgb_color, rgb_color2);
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn duotone_lilac(img: &mut PrettierImage) {
-    let rgb_color = Rgb::new(45, 3, 3);
-    let rgb_color2 = Rgb::new(163, 134, 224);
-    duotone(img, rgb_color, rgb_color2);
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn duotone_ochre(img: &mut PrettierImage) {
-    let rgb_color = Rgb::new(25, 36, 88);
-    let rgb_color2 = Rgb::new(236, 119, 0);
-    duotone(img, rgb_color, rgb_color2);
 }
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]

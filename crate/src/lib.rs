@@ -1,6 +1,3 @@
-use base64::decode;
-use image::DynamicImage::ImageRgba8;
-use image::GenericImageView;
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "enable_wasm")]
@@ -72,30 +69,6 @@ impl Rgb {
     pub fn new(r: u8, g: u8, b: u8) -> Rgb {
         Rgb { r, g, b }
     }
-
-    pub fn set_red(&mut self, r: u8) {
-        self.r = r;
-    }
-
-    pub fn set_green(&mut self, g: u8) {
-        self.g = g;
-    }
-
-    pub fn set_blue(&mut self, b: u8) {
-        self.b = b;
-    }
-
-    pub fn get_red(&self) -> u8 {
-        self.r
-    }
-
-    pub fn get_green(&self) -> u8 {
-        self.g
-    }
-
-    pub fn get_blue(&self) -> u8 {
-        self.b
-    }
 }
 
 impl From<Vec<u8>> for Rgb {
@@ -122,38 +95,6 @@ impl Rgba {
     pub fn new(r: u8, g: u8, b: u8, a: u8) -> Rgba {
         Rgba { r, g, b, a }
     }
-
-    pub fn set_red(&mut self, r: u8) {
-        self.r = r;
-    }
-
-    pub fn set_green(&mut self, g: u8) {
-        self.g = g;
-    }
-
-    pub fn set_blue(&mut self, b: u8) {
-        self.b = b;
-    }
-
-    pub fn set_alpha(&mut self, a: u8) {
-        self.a = a;
-    }
-
-    pub fn get_red(&self) -> u8 {
-        self.r
-    }
-
-    pub fn get_green(&self) -> u8 {
-        self.g
-    }
-
-    pub fn get_blue(&self) -> u8 {
-        self.b
-    }
-
-    pub fn get_alpha(&self) -> u8 {
-        self.a
-    }
 }
 
 impl From<Vec<u8>> for Rgba {
@@ -165,7 +106,6 @@ impl From<Vec<u8>> for Rgba {
     }
 }
 
-///! [temp] Check if WASM is supported.
 #[cfg(feature = "enable_wasm")]
 #[wasm_bindgen]
 pub fn run() -> Result<(), JsValue> {
@@ -238,28 +178,6 @@ pub fn open_image(canvas: HtmlCanvasElement, ctx: CanvasRenderingContext2d) -> P
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn to_raw_pixels(imgdata: ImageData) -> Vec<u8> {
     imgdata.data().to_vec()
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn base64_to_image(base64: &str) -> PrettierImage {
-    let base64_to_vec: Vec<u8> = base64_to_vec(base64);
-
-    let slice = base64_to_vec.as_slice();
-
-    let mut img = image::load_from_memory(slice).unwrap();
-    img = ImageRgba8(img.to_rgba8());
-    let raw_pixels = img.to_bytes();
-
-    PrettierImage {
-        raw_pixels,
-        width: img.width(),
-        height: img.height(),
-    }
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn base64_to_vec(base64: &str) -> Vec<u8> {
-    decode(base64).unwrap()
 }
 
 fn set_panic_hook() {

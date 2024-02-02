@@ -191,85 +191,54 @@ function _assertClass(instance, klass) {
     return instance.ptr;
 }
 /**
-* @param {PrettierImage} prettier_image
-* @param {number} channel_index
-* @param {number} offset
-*/
-export function offset(prettier_image, channel_index, offset) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.offset(prettier_image.__wbg_ptr, channel_index, offset);
-}
-
-/**
 * @param {PrettierImage} img
-* @param {number} offset_amt
+* @param {string} filter_name
 */
-export function offset_red(img, offset_amt) {
+export function filter(img, filter_name) {
     _assertClass(img, PrettierImage);
-    wasm.offset_red(img.__wbg_ptr, offset_amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} offset_amt
-*/
-export function offset_green(img, offset_amt) {
-    _assertClass(img, PrettierImage);
-    wasm.offset_green(img.__wbg_ptr, offset_amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} offset_amt
-*/
-export function offset_blue(img, offset_amt) {
-    _assertClass(img, PrettierImage);
-    wasm.offset_blue(img.__wbg_ptr, offset_amt);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} offset
-* @param {number} channel_index
-* @param {number} channel_index2
-*/
-export function multiple_offsets(prettier_image, offset, channel_index, channel_index2) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.multiple_offsets(prettier_image.__wbg_ptr, offset, channel_index, channel_index2);
+    const ptr0 = passStringToWasm0(filter_name, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const len0 = WASM_VECTOR_LEN;
+    wasm.filter(img.__wbg_ptr, ptr0, len0);
 }
 
 /**
 * @param {PrettierImage} img
 */
-export function primary(img) {
+export function lofi(img) {
     _assertClass(img, PrettierImage);
-    wasm.primary(img.__wbg_ptr);
+    wasm.lofi(img.__wbg_ptr);
 }
 
 /**
-* @param {PrettierImage} prettier_image
+* @param {PrettierImage} img
 */
-export function colorize(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.colorize(prettier_image.__wbg_ptr);
+export function pastel_pink(img) {
+    _assertClass(img, PrettierImage);
+    wasm.pastel_pink(img.__wbg_ptr);
 }
 
 /**
-* @param {PrettierImage} prettier_image
+* @param {PrettierImage} img
 */
-export function solarize(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.solarize(prettier_image.__wbg_ptr);
+export function golden(img) {
+    _assertClass(img, PrettierImage);
+    wasm.golden(img.__wbg_ptr);
 }
 
 /**
-* @param {PrettierImage} prettier_image
-* @returns {PrettierImage}
+* @param {PrettierImage} img
 */
-export function solarize_retimg(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    const ret = wasm.solarize_retimg(prettier_image.__wbg_ptr);
-    return PrettierImage.__wrap(ret);
+export function cali(img) {
+    _assertClass(img, PrettierImage);
+    wasm.cali(img.__wbg_ptr);
+}
+
+/**
+* @param {PrettierImage} img
+*/
+export function firenze(img) {
+    _assertClass(img, PrettierImage);
+    wasm.firenze(img.__wbg_ptr);
 }
 
 /**
@@ -290,558 +259,6 @@ export function adjust_contrast(prettier_image, contrast) {
     wasm.adjust_contrast(prettier_image.__wbg_ptr, contrast);
 }
 
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} r_offset
-* @param {number} g_offset
-* @param {number} b_offset
-*/
-export function tint(prettier_image, r_offset, g_offset, b_offset) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.tint(prettier_image.__wbg_ptr, r_offset, g_offset, b_offset);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} num_strips
-*/
-export function horizontal_strips(prettier_image, num_strips) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.horizontal_strips(prettier_image.__wbg_ptr, num_strips);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} num_strips
-* @param {Rgb} color
-*/
-export function color_horizontal_strips(prettier_image, num_strips, color) {
-    _assertClass(prettier_image, PrettierImage);
-    _assertClass(color, Rgb);
-    var ptr0 = color.__destroy_into_raw();
-    wasm.color_horizontal_strips(prettier_image.__wbg_ptr, num_strips, ptr0);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} num_strips
-*/
-export function vertical_strips(prettier_image, num_strips) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.vertical_strips(prettier_image.__wbg_ptr, num_strips);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} num_strips
-* @param {Rgb} color
-*/
-export function color_vertical_strips(prettier_image, num_strips, color) {
-    _assertClass(prettier_image, PrettierImage);
-    _assertClass(color, Rgb);
-    var ptr0 = color.__destroy_into_raw();
-    wasm.color_vertical_strips(prettier_image.__wbg_ptr, num_strips, ptr0);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} radius
-* @param {number} intensity
-*/
-export function oil(prettier_image, radius, intensity) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.oil(prettier_image.__wbg_ptr, radius, intensity);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-*/
-export function frosted_glass(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.frosted_glass(prettier_image.__wbg_ptr);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} pixel_size
-*/
-export function pixelize(prettier_image, pixel_size) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.pixelize(prettier_image.__wbg_ptr, pixel_size);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-*/
-export function normalize(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.normalize(prettier_image.__wbg_ptr);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} depth
-*/
-export function dither(prettier_image, depth) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.dither(prettier_image.__wbg_ptr, depth);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {Rgb} color_a
-* @param {Rgb} color_b
-*/
-export function duotone(prettier_image, color_a, color_b) {
-    _assertClass(prettier_image, PrettierImage);
-    _assertClass(color_a, Rgb);
-    var ptr0 = color_a.__destroy_into_raw();
-    _assertClass(color_b, Rgb);
-    var ptr1 = color_b.__destroy_into_raw();
-    wasm.duotone(prettier_image.__wbg_ptr, ptr0, ptr1);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} channel
-* @param {number} amt
-*/
-export function alter_channel(img, channel, amt) {
-    _assertClass(img, PrettierImage);
-    wasm.alter_channel(img.__wbg_ptr, channel, amt);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} amt
-*/
-export function alter_red_channel(prettier_image, amt) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.alter_red_channel(prettier_image.__wbg_ptr, amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} amt
-*/
-export function alter_green_channel(img, amt) {
-    _assertClass(img, PrettierImage);
-    wasm.alter_green_channel(img.__wbg_ptr, amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} amt
-*/
-export function alter_blue_channel(img, amt) {
-    _assertClass(img, PrettierImage);
-    wasm.alter_blue_channel(img.__wbg_ptr, amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} channel1
-* @param {number} amt1
-* @param {number} channel2
-* @param {number} amt2
-*/
-export function alter_two_channels(img, channel1, amt1, channel2, amt2) {
-    _assertClass(img, PrettierImage);
-    wasm.alter_two_channels(img.__wbg_ptr, channel1, amt1, channel2, amt2);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} r_amt
-* @param {number} g_amt
-* @param {number} b_amt
-*/
-export function alter_channels(img, r_amt, g_amt, b_amt) {
-    _assertClass(img, PrettierImage);
-    wasm.alter_channels(img.__wbg_ptr, r_amt, g_amt, b_amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} channel
-* @param {number} min_filter
-*/
-export function remove_channel(img, channel, min_filter) {
-    _assertClass(img, PrettierImage);
-    wasm.remove_channel(img.__wbg_ptr, channel, min_filter);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} min_filter
-*/
-export function remove_red_channel(img, min_filter) {
-    _assertClass(img, PrettierImage);
-    wasm.remove_red_channel(img.__wbg_ptr, min_filter);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} min_filter
-*/
-export function remove_green_channel(img, min_filter) {
-    _assertClass(img, PrettierImage);
-    wasm.remove_green_channel(img.__wbg_ptr, min_filter);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} min_filter
-*/
-export function remove_blue_channel(img, min_filter) {
-    _assertClass(img, PrettierImage);
-    wasm.remove_blue_channel(img.__wbg_ptr, min_filter);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} channel1
-* @param {number} channel2
-*/
-export function swap_channels(img, channel1, channel2) {
-    _assertClass(img, PrettierImage);
-    wasm.swap_channels(img.__wbg_ptr, channel1, channel2);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-*/
-export function invert(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.invert(prettier_image.__wbg_ptr);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {Rgb} ref_color
-* @param {number} degrees
-*/
-export function selective_hue_rotate(prettier_image, ref_color, degrees) {
-    _assertClass(prettier_image, PrettierImage);
-    _assertClass(ref_color, Rgb);
-    var ptr0 = ref_color.__destroy_into_raw();
-    wasm.selective_hue_rotate(prettier_image.__wbg_ptr, ptr0, degrees);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {Rgb} ref_color
-* @param {Rgb} new_color
-* @param {number} fraction
-*/
-export function selective_color_convert(prettier_image, ref_color, new_color, fraction) {
-    _assertClass(prettier_image, PrettierImage);
-    _assertClass(ref_color, Rgb);
-    var ptr0 = ref_color.__destroy_into_raw();
-    _assertClass(new_color, Rgb);
-    var ptr1 = new_color.__destroy_into_raw();
-    wasm.selective_color_convert(prettier_image.__wbg_ptr, ptr0, ptr1, fraction);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {Rgb} ref_color
-* @param {number} amt
-*/
-export function selective_lighten(img, ref_color, amt) {
-    _assertClass(img, PrettierImage);
-    _assertClass(ref_color, Rgb);
-    var ptr0 = ref_color.__destroy_into_raw();
-    wasm.selective_lighten(img.__wbg_ptr, ptr0, amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {Rgb} ref_color
-* @param {number} amt
-*/
-export function selective_desaturate(img, ref_color, amt) {
-    _assertClass(img, PrettierImage);
-    _assertClass(ref_color, Rgb);
-    var ptr0 = ref_color.__destroy_into_raw();
-    wasm.selective_desaturate(img.__wbg_ptr, ptr0, amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {Rgb} ref_color
-* @param {number} amt
-*/
-export function selective_saturate(img, ref_color, amt) {
-    _assertClass(img, PrettierImage);
-    _assertClass(ref_color, Rgb);
-    var ptr0 = ref_color.__destroy_into_raw();
-    wasm.selective_saturate(img.__wbg_ptr, ptr0, amt);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {Rgb} ref_color
-*/
-export function selective_greyscale(prettier_image, ref_color) {
-    _assertClass(prettier_image, PrettierImage);
-    var ptr0 = prettier_image.__destroy_into_raw();
-    _assertClass(ref_color, Rgb);
-    var ptr1 = ref_color.__destroy_into_raw();
-    wasm.selective_greyscale(ptr0, ptr1);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {number} red
-* @param {number} green
-* @param {number} blue
-*/
-export function gamma_correction(prettier_image, red, green, blue) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.gamma_correction(prettier_image.__wbg_ptr, red, green, blue);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {string} mode
-* @param {number} amt
-*/
-export function hsluv(prettier_image, mode, amt) {
-    _assertClass(prettier_image, PrettierImage);
-    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-    const len0 = WASM_VECTOR_LEN;
-    wasm.hsluv(prettier_image.__wbg_ptr, ptr0, len0, amt);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {string} mode
-* @param {number} amt
-*/
-export function lch(prettier_image, mode, amt) {
-    _assertClass(prettier_image, PrettierImage);
-    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-    const len0 = WASM_VECTOR_LEN;
-    wasm.lch(prettier_image.__wbg_ptr, ptr0, len0, amt);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {string} mode
-* @param {number} amt
-*/
-export function hsl(prettier_image, mode, amt) {
-    _assertClass(prettier_image, PrettierImage);
-    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-    const len0 = WASM_VECTOR_LEN;
-    wasm.hsl(prettier_image.__wbg_ptr, ptr0, len0, amt);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {string} mode
-* @param {number} amt
-*/
-export function hsv(prettier_image, mode, amt) {
-    _assertClass(prettier_image, PrettierImage);
-    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-    const len0 = WASM_VECTOR_LEN;
-    wasm.hsv(prettier_image.__wbg_ptr, ptr0, len0, amt);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} degrees
-*/
-export function hue_rotate_hsl(img, degrees) {
-    _assertClass(img, PrettierImage);
-    wasm.hue_rotate_hsl(img.__wbg_ptr, degrees);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} degrees
-*/
-export function hue_rotate_hsv(img, degrees) {
-    _assertClass(img, PrettierImage);
-    wasm.hue_rotate_hsv(img.__wbg_ptr, degrees);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} degrees
-*/
-export function hue_rotate_lch(img, degrees) {
-    _assertClass(img, PrettierImage);
-    wasm.hue_rotate_lch(img.__wbg_ptr, degrees);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} degrees
-*/
-export function hue_rotate_hsluv(img, degrees) {
-    _assertClass(img, PrettierImage);
-    wasm.hue_rotate_hsluv(img.__wbg_ptr, degrees);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function saturate_hsl(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.saturate_hsl(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function saturate_lch(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.saturate_lch(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function saturate_hsluv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.saturate_hsluv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function saturate_hsv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.saturate_hsv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function lighten_lch(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.lighten_lch(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function lighten_hsluv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.lighten_hsluv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function lighten_hsl(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.lighten_hsl(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function lighten_hsv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.lighten_hsv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function darken_lch(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.darken_lch(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function darken_hsluv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.darken_hsluv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function darken_hsl(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.darken_hsl(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function darken_hsv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.darken_hsv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function desaturate_hsv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.desaturate_hsv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function desaturate_hsl(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.desaturate_hsl(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function desaturate_lch(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.desaturate_lch(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {number} level
-*/
-export function desaturate_hsluv(img, level) {
-    _assertClass(img, PrettierImage);
-    wasm.desaturate_hsluv(img.__wbg_ptr, level);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-* @param {Rgb} mix_colour
-* @param {number} opacity
-*/
-export function mix_with_colour(prettier_image, mix_colour, opacity) {
-    _assertClass(prettier_image, PrettierImage);
-    _assertClass(mix_colour, Rgb);
-    var ptr0 = mix_colour.__destroy_into_raw();
-    wasm.mix_with_colour(prettier_image.__wbg_ptr, ptr0, opacity);
-}
-
 function passArray8ToWasm0(arg, malloc) {
     const ptr = malloc(arg.length * 1) >>> 0;
     getUint8Memory0().set(arg, ptr / 1);
@@ -854,7 +271,6 @@ function getArrayU8FromWasm0(ptr, len) {
     return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
 }
 /**
-*! [temp] Check if WASM is supported.
 */
 export function run() {
     try {
@@ -932,152 +348,289 @@ export function to_raw_pixels(imgdata) {
 }
 
 /**
-* @param {string} base64
-* @returns {PrettierImage}
+* @param {PrettierImage} prettier_image
+* @param {string} mode
+* @param {number} amt
 */
-export function base64_to_image(base64) {
-    const ptr0 = passStringToWasm0(base64, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+export function lch(prettier_image, mode, amt) {
+    _assertClass(prettier_image, PrettierImage);
+    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.base64_to_image(ptr0, len0);
-    return PrettierImage.__wrap(ret);
-}
-
-/**
-* @param {string} base64
-* @returns {Uint8Array}
-*/
-export function base64_to_vec(base64) {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(base64, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len0 = WASM_VECTOR_LEN;
-        wasm.base64_to_vec(retptr, ptr0, len0);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var v2 = getArrayU8FromWasm0(r0, r1).slice();
-        wasm.__wbindgen_free(r0, r1 * 1);
-        return v2;
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-    }
+    wasm.lch(prettier_image.__wbg_ptr, ptr0, len0, amt);
 }
 
 /**
 * @param {PrettierImage} prettier_image
+* @param {string} mode
+* @param {number} amt
 */
-export function neue(prettier_image) {
+export function hsl(prettier_image, mode, amt) {
     _assertClass(prettier_image, PrettierImage);
-    wasm.neue(prettier_image.__wbg_ptr);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-*/
-export function lix(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.lix(prettier_image.__wbg_ptr);
-}
-
-/**
-* @param {PrettierImage} prettier_image
-*/
-export function ryo(prettier_image) {
-    _assertClass(prettier_image, PrettierImage);
-    wasm.ryo(prettier_image.__wbg_ptr);
-}
-
-/**
-* @param {PrettierImage} img
-* @param {string} filter_name
-*/
-export function filter(img, filter_name) {
-    _assertClass(img, PrettierImage);
-    const ptr0 = passStringToWasm0(filter_name, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     const len0 = WASM_VECTOR_LEN;
-    wasm.filter(img.__wbg_ptr, ptr0, len0);
+    wasm.hsl(prettier_image.__wbg_ptr, ptr0, len0, amt);
+}
+
+/**
+* @param {PrettierImage} prettier_image
+* @param {string} mode
+* @param {number} amt
+*/
+export function hsv(prettier_image, mode, amt) {
+    _assertClass(prettier_image, PrettierImage);
+    const ptr0 = passStringToWasm0(mode, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const len0 = WASM_VECTOR_LEN;
+    wasm.hsv(prettier_image.__wbg_ptr, ptr0, len0, amt);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} degrees
 */
-export function lofi(img) {
+export function hue_rotate_hsl(img, degrees) {
     _assertClass(img, PrettierImage);
-    wasm.lofi(img.__wbg_ptr);
+    wasm.hue_rotate_hsl(img.__wbg_ptr, degrees);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} degrees
 */
-export function pastel_pink(img) {
+export function hue_rotate_hsv(img, degrees) {
     _assertClass(img, PrettierImage);
-    wasm.pastel_pink(img.__wbg_ptr);
+    wasm.hue_rotate_hsv(img.__wbg_ptr, degrees);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} degrees
 */
-export function golden(img) {
+export function hue_rotate_lch(img, degrees) {
     _assertClass(img, PrettierImage);
-    wasm.golden(img.__wbg_ptr);
+    wasm.hue_rotate_lch(img.__wbg_ptr, degrees);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} level
 */
-export function cali(img) {
+export function saturate_hsl(img, level) {
     _assertClass(img, PrettierImage);
-    wasm.cali(img.__wbg_ptr);
+    wasm.saturate_hsl(img.__wbg_ptr, level);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} level
 */
-export function duotone_violette(img) {
+export function saturate_lch(img, level) {
     _assertClass(img, PrettierImage);
-    wasm.duotone_violette(img.__wbg_ptr);
+    wasm.saturate_lch(img.__wbg_ptr, level);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} level
 */
-export function duotone_horizon(img) {
+export function saturate_hsv(img, level) {
     _assertClass(img, PrettierImage);
-    wasm.duotone_horizon(img.__wbg_ptr);
+    wasm.saturate_hsv(img.__wbg_ptr, level);
 }
 
 /**
 * @param {PrettierImage} img
-* @param {Rgb} rgb_color
+* @param {number} level
 */
-export function duotone_tint(img, rgb_color) {
+export function lighten_lch(img, level) {
     _assertClass(img, PrettierImage);
-    _assertClass(rgb_color, Rgb);
-    var ptr0 = rgb_color.__destroy_into_raw();
-    wasm.duotone_tint(img.__wbg_ptr, ptr0);
+    wasm.lighten_lch(img.__wbg_ptr, level);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} level
 */
-export function duotone_lilac(img) {
+export function lighten_hsl(img, level) {
     _assertClass(img, PrettierImage);
-    wasm.duotone_lilac(img.__wbg_ptr);
+    wasm.lighten_hsl(img.__wbg_ptr, level);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} level
 */
-export function duotone_ochre(img) {
+export function lighten_hsv(img, level) {
     _assertClass(img, PrettierImage);
-    wasm.duotone_ochre(img.__wbg_ptr);
+    wasm.lighten_hsv(img.__wbg_ptr, level);
 }
 
 /**
 * @param {PrettierImage} img
+* @param {number} level
 */
-export function firenze(img) {
+export function darken_lch(img, level) {
     _assertClass(img, PrettierImage);
-    wasm.firenze(img.__wbg_ptr);
+    wasm.darken_lch(img.__wbg_ptr, level);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} level
+*/
+export function darken_hsl(img, level) {
+    _assertClass(img, PrettierImage);
+    wasm.darken_hsl(img.__wbg_ptr, level);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} level
+*/
+export function darken_hsv(img, level) {
+    _assertClass(img, PrettierImage);
+    wasm.darken_hsv(img.__wbg_ptr, level);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} level
+*/
+export function desaturate_hsv(img, level) {
+    _assertClass(img, PrettierImage);
+    wasm.desaturate_hsv(img.__wbg_ptr, level);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} level
+*/
+export function desaturate_hsl(img, level) {
+    _assertClass(img, PrettierImage);
+    wasm.desaturate_hsl(img.__wbg_ptr, level);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} level
+*/
+export function desaturate_lch(img, level) {
+    _assertClass(img, PrettierImage);
+    wasm.desaturate_lch(img.__wbg_ptr, level);
+}
+
+/**
+* @param {PrettierImage} prettier_image
+* @param {Rgb} mix_colour
+* @param {number} opacity
+*/
+export function mix_with_colour(prettier_image, mix_colour, opacity) {
+    _assertClass(prettier_image, PrettierImage);
+    _assertClass(mix_colour, Rgb);
+    var ptr0 = mix_colour.__destroy_into_raw();
+    wasm.mix_with_colour(prettier_image.__wbg_ptr, ptr0, opacity);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} channel
+* @param {number} amt
+*/
+export function alter_channel(img, channel, amt) {
+    _assertClass(img, PrettierImage);
+    wasm.alter_channel(img.__wbg_ptr, channel, amt);
+}
+
+/**
+* @param {PrettierImage} prettier_image
+* @param {number} amt
+*/
+export function alter_red_channel(prettier_image, amt) {
+    _assertClass(prettier_image, PrettierImage);
+    wasm.alter_red_channel(prettier_image.__wbg_ptr, amt);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} amt
+*/
+export function alter_green_channel(img, amt) {
+    _assertClass(img, PrettierImage);
+    wasm.alter_green_channel(img.__wbg_ptr, amt);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} amt
+*/
+export function alter_blue_channel(img, amt) {
+    _assertClass(img, PrettierImage);
+    wasm.alter_blue_channel(img.__wbg_ptr, amt);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} r_amt
+* @param {number} g_amt
+* @param {number} b_amt
+*/
+export function alter_channels(img, r_amt, g_amt, b_amt) {
+    _assertClass(img, PrettierImage);
+    wasm.alter_channels(img.__wbg_ptr, r_amt, g_amt, b_amt);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} channel
+* @param {number} min_filter
+*/
+export function remove_channel(img, channel, min_filter) {
+    _assertClass(img, PrettierImage);
+    wasm.remove_channel(img.__wbg_ptr, channel, min_filter);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} min_filter
+*/
+export function remove_red_channel(img, min_filter) {
+    _assertClass(img, PrettierImage);
+    wasm.remove_red_channel(img.__wbg_ptr, min_filter);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} min_filter
+*/
+export function remove_green_channel(img, min_filter) {
+    _assertClass(img, PrettierImage);
+    wasm.remove_green_channel(img.__wbg_ptr, min_filter);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} min_filter
+*/
+export function remove_blue_channel(img, min_filter) {
+    _assertClass(img, PrettierImage);
+    wasm.remove_blue_channel(img.__wbg_ptr, min_filter);
+}
+
+/**
+* @param {PrettierImage} img
+* @param {number} channel1
+* @param {number} channel2
+*/
+export function swap_channels(img, channel1, channel2) {
+    _assertClass(img, PrettierImage);
+    wasm.swap_channels(img.__wbg_ptr, channel1, channel2);
+}
+
+/**
+* @param {PrettierImage} prettier_image
+*/
+export function invert(prettier_image) {
+    _assertClass(prettier_image, PrettierImage);
+    wasm.invert(prettier_image.__wbg_ptr);
 }
 
 function isLikeNone(x) {
@@ -1202,45 +755,6 @@ export class Rgb {
         const ret = wasm.rgb_new(r, g, b);
         return Rgb.__wrap(ret);
     }
-    /**
-    * @param {number} r
-    */
-    set_red(r) {
-        wasm.rgb_set_red(this.__wbg_ptr, r);
-    }
-    /**
-    * @param {number} g
-    */
-    set_green(g) {
-        wasm.rgb_set_green(this.__wbg_ptr, g);
-    }
-    /**
-    * @param {number} b
-    */
-    set_blue(b) {
-        wasm.rgb_set_blue(this.__wbg_ptr, b);
-    }
-    /**
-    * @returns {number}
-    */
-    get_red() {
-        const ret = wasm.rgb_get_red(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-    * @returns {number}
-    */
-    get_green() {
-        const ret = wasm.rgb_get_green(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-    * @returns {number}
-    */
-    get_blue() {
-        const ret = wasm.rgb_get_blue(this.__wbg_ptr);
-        return ret;
-    }
 }
 /**
 */
@@ -1274,58 +788,6 @@ export class Rgba {
     constructor(r, g, b, a) {
         const ret = wasm.rgba_new(r, g, b, a);
         return Rgba.__wrap(ret);
-    }
-    /**
-    * @param {number} r
-    */
-    set_red(r) {
-        wasm.rgb_set_red(this.__wbg_ptr, r);
-    }
-    /**
-    * @param {number} g
-    */
-    set_green(g) {
-        wasm.rgb_set_green(this.__wbg_ptr, g);
-    }
-    /**
-    * @param {number} b
-    */
-    set_blue(b) {
-        wasm.rgb_set_blue(this.__wbg_ptr, b);
-    }
-    /**
-    * @param {number} a
-    */
-    set_alpha(a) {
-        wasm.rgba_set_alpha(this.__wbg_ptr, a);
-    }
-    /**
-    * @returns {number}
-    */
-    get_red() {
-        const ret = wasm.rgb_get_red(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-    * @returns {number}
-    */
-    get_green() {
-        const ret = wasm.rgb_get_green(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-    * @returns {number}
-    */
-    get_blue() {
-        const ret = wasm.rgb_get_blue(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-    * @returns {number}
-    */
-    get_alpha() {
-        const ret = wasm.rgba_get_alpha(this.__wbg_ptr);
-        return ret;
     }
 }
 

@@ -3,85 +3,12 @@ use crate::{helpers, PrettierImage, Rgb};
 use image::GenericImageView;
 use image::Pixel as ImagePixel;
 use palette::{FromColor, IntoColor};
-use palette::{Hsla, Hsluva, Hsva, Hue, Lcha, Saturate, Shade, Srgba};
+use palette::{Hsla, Hsva, Hue, Lcha, Saturate, Shade, Srgba};
 
 #[cfg(feature = "enable_wasm")]
 use wasm_bindgen::prelude::*;
 
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn gamma_correction(prettier_image: &mut PrettierImage, red: f32, green: f32, blue: f32) {
-    let buf = prettier_image.raw_pixels.as_mut_slice();
-    let buf_size = buf.len();
-
-    let mut gamma_r: Vec<u8> = vec![0; 256];
-    let mut gamma_g: Vec<u8> = vec![0; 256];
-    let mut gamma_b: Vec<u8> = vec![0; 256];
-
-    let inv_red = 1.0 / red;
-    let inv_green = 1.0 / green;
-    let inv_blue = 1.0 / blue;
-
-    for i in 0..256 {
-        let input = (i as f32) / 255.0;
-        gamma_r[i] = (255.0 * input.powf(inv_red) + 0.5).clamp(0.0, 255.0) as u8;
-        gamma_g[i] = (255.0 * input.powf(inv_green) + 0.5).clamp(0.0, 255.0) as u8;
-        gamma_b[i] = (255.0 * input.powf(inv_blue) + 0.5).clamp(0.0, 255.0) as u8;
-    }
-
-    for i in (0..buf_size).step_by(4) {
-        let r = buf[i];
-        let g = buf[i + 1];
-        let b = buf[i + 2];
-
-        buf[i] = gamma_r[r as usize];
-        buf[i + 1] = gamma_g[g as usize];
-        buf[i + 2] = gamma_b[b as usize];
-    }
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn hsluv(prettier_image: &mut PrettierImage, mode: &str, amt: f32) {
-    let img = helpers::dyn_image_from_raw(prettier_image);
-    let (width, height) = img.dimensions();
-    let mut img = img.to_rgba8();
-
-    for (x, y) in ImageIterator::new(width, height) {
-        let px_data = img.get_pixel(x, y).channels();
-        let hsluv_color: Hsluva = Srgba::new(
-            px_data[0] as f32 / 255.0,
-            px_data[1] as f32 / 255.0,
-            px_data[2] as f32 / 255.0,
-            px_data[3] as f32 / 255.0,
-        )
-        .into_linear()
-        .into_color();
-
-        let new_color = match mode {
-            "desaturate" => hsluv_color.desaturate(amt),
-            "saturate" => hsluv_color.saturate(amt),
-            "lighten" => hsluv_color.lighten(amt),
-            "darken" => hsluv_color.darken(amt),
-            "shift_hue" => hsluv_color.shift_hue(amt * 360.0),
-            _ => hsluv_color.saturate(amt),
-        };
-        let final_color: Srgba = Srgba::from_linear(new_color.into_color()).into_format();
-
-        let components = final_color.into_components();
-
-        img.put_pixel(
-            x,
-            y,
-            image::Rgba([
-                (components.0 * 255.0) as u8,
-                (components.1 * 255.0) as u8,
-                (components.2 * 255.0) as u8,
-                (components.3 * 255.0) as u8,
-            ]),
-        );
-    }
-    prettier_image.raw_pixels = img.to_vec();
-}
-
+// LCh颜色空间中的图像处理
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn lch(prettier_image: &mut PrettierImage, mode: &str, amt: f32) {
     let img = helpers::dyn_image_from_raw(prettier_image);
@@ -125,6 +52,7 @@ pub fn lch(prettier_image: &mut PrettierImage, mode: &str, amt: f32) {
     prettier_image.raw_pixels = img.to_vec();
 }
 
+// HSL颜色空间中的图像操作
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn hsl(prettier_image: &mut PrettierImage, mode: &str, amt: f32) {
     let mut img = helpers::dyn_image_from_raw(prettier_image).to_rgba8();
@@ -167,6 +95,7 @@ pub fn hsl(prettier_image: &mut PrettierImage, mode: &str, amt: f32) {
     prettier_image.raw_pixels = img.to_vec();
 }
 
+// HSV颜色空间中的图像操作
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn hsv(prettier_image: &mut PrettierImage, mode: &str, amt: f32) {
     let img = helpers::dyn_image_from_raw(prettier_image);
@@ -228,11 +157,6 @@ pub fn hue_rotate_lch(img: &mut PrettierImage, degrees: f32) {
 }
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn hue_rotate_hsluv(img: &mut PrettierImage, degrees: f32) {
-    hsluv(img, "shift_hue", degrees)
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn saturate_hsl(img: &mut PrettierImage, level: f32) {
     hsl(img, "saturate", level)
 }
@@ -243,11 +167,6 @@ pub fn saturate_lch(img: &mut PrettierImage, level: f32) {
 }
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn saturate_hsluv(img: &mut PrettierImage, level: f32) {
-    hsluv(img, "saturate", level)
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn saturate_hsv(img: &mut PrettierImage, level: f32) {
     hsv(img, "saturate", level)
 }
@@ -255,11 +174,6 @@ pub fn saturate_hsv(img: &mut PrettierImage, level: f32) {
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn lighten_lch(img: &mut PrettierImage, level: f32) {
     lch(img, "lighten", level)
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn lighten_hsluv(img: &mut PrettierImage, level: f32) {
-    hsluv(img, "lighten", level)
 }
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
@@ -275,11 +189,6 @@ pub fn lighten_hsv(img: &mut PrettierImage, level: f32) {
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn darken_lch(img: &mut PrettierImage, level: f32) {
     lch(img, "darken", level)
-}
-
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn darken_hsluv(img: &mut PrettierImage, level: f32) {
-    hsluv(img, "darken", level)
 }
 
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
@@ -307,11 +216,7 @@ pub fn desaturate_lch(img: &mut PrettierImage, level: f32) {
     lch(img, "desaturate", level)
 }
 
-#[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
-pub fn desaturate_hsluv(img: &mut PrettierImage, level: f32) {
-    hsluv(img, "desaturate", level)
-}
-
+// 将图像与单一颜色混合，传递“不透明度
 #[cfg_attr(feature = "enable_wasm", wasm_bindgen)]
 pub fn mix_with_colour(prettier_image: &mut PrettierImage, mix_colour: Rgb, opacity: f32) {
     let img = helpers::dyn_image_from_raw(prettier_image);
