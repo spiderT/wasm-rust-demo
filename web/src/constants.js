@@ -1,0 +1,47 @@
+export const FILTERS = [
+  "oceanic",
+  "islands",
+  "marine",
+  "seagreen",
+  "flagblue",
+  "liquid",
+  "diamante",
+  "vintage",
+  "perfume",
+  "serenity",
+];
+
+export const CHANNELS = [
+  "invert",
+  "inc_red_channel",
+  "inc_blue_channel",
+  "inc_green_channel",
+  "inc_two_channels",
+  "swap_rg_channels",
+  "swap_gb_channels",
+  "swap_rb_channels",
+  "remove_red_channel",
+  "remove_green_channel",
+  "remove_blue_channel",
+  "dec_red_channel",
+  "dec_blue_channel",
+  "dec_green_channel",
+];
+
+export const COLOUR_SPACES = [
+  "hue_rotate_hsl",
+  "hue_rotate_hsv",
+  "hue_rotate_lch",
+  "lighten_hsl",
+  "lighten_hsv",
+  "lighten_lch",
+  "darken_hsl",
+  "darken_hsv",
+  "darken_lch",
+  "saturate_hsl",
+  "saturate_hsv",
+  "saturate_lch",
+  "desaturate_hsl",
+  "desaturate_hsv",
+  "desaturate_lch",
+];

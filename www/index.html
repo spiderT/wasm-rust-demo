@@ -97,14 +97,6 @@
       width: 80%;
     }
 
-    .colour_scheme {
-      border: solid transparent 0.1em;
-      border-radius: 0.5em;
-      padding: 2em;
-      padding-right: 4em;
-      padding-left: 4em;
-    }
-
     .benchmarks {
       font-size: 2em;
       grid-area: "main_right";
@@ -117,20 +109,6 @@
       grid-template-areas: "main_left main_right";
     }
 
-    #code {
-      font-size: 0.5em;
-    }
-
-    .topnav {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-    }
-    a {
-      color: rgb(105, 105, 105);
-      text-decoration: none;
-      margin-left: 1em;
-    }
     li:hover {
       color: rgb(143, 143, 143);
     }
@@ -138,20 +116,12 @@
 
   <body>
     <div class="default">
-      <nav class="topnav">
-        <ul>
-          <li>
-            <a href="#change_img">
-              <input
-                class="file-input"
-                type="file"
-                id="img_uploader"
-                name="upload-image"
-              />
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <input
+        class="file-input"
+        type="file"
+        id="img_uploader"
+        name="upload-image"
+      />
       <div class="sidebar">
         <ul>
           <h4>Filters</h4>
